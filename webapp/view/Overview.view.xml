@@ -14,7 +14,7 @@
           >
      </PageAccessibleLandmarkInfo>
      </landmarkInfo>
-     <headerContent>3
+     <headerContent>
          <Button 
              icon="sap-icon://hello-world"
              press=".onOpenDialog"/>
