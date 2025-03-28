@@ -6,23 +6,28 @@ sap.ui.define([
 
     return {
         init: function () {
+            // Initialize the mock server with a root URI pointing to the local service
             var oMockServer = new MockServer({
-                rootUri: "https://services.odata.org/v2/Northwind/Northwind.svc/"
+                rootUri:"https/v2/Northwind/Northwind.svc/"  // Use a relative path for local services
             });
 
+            // Fetch the URL parameters (if any)
             var oUriParameters = new UriParameters(window.location.href);
 
-            // Configure mock server with a delay
-
+            // Configure the mock server with an auto-respond delay (optional)
             MockServer.config({
                 autoRespond: true,
-                autoRespondAfter: oUriParameters.get("serverDelay") || 500
+                autoRespondAfter: oUriParameters.get("serverDelay") || 500 // Delay if provided in the URL
             });
 
-            //simulate 
+            // simulate
             var sPath = sap.ui.require.toUrl("ui5/walkthrough/localService");
-            oMockServer.simulate(sPath + "/metadata.xml", sPath + "/mockdata");
-            
+            oMockServer.simulate(sPath + "/metadata.xml", {
+                sMockdataBaseUrl: sPath + "/mockdata",
+                bGenerateMissingMockData: true
+            });
+
+
             // Start the mock server
             oMockServer.start();
         }

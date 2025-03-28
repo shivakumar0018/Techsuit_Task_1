@@ -7,5 +7,4 @@ sap.ui.define([
         settings: { id: "walkthrough" },
         async: true
     }).placeAt("content");
-    
 });

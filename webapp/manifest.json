@@ -11,23 +11,22 @@
         "title": "{{appTitle}}",
         "description": "{{appDescription}}",
         "tags": {
-            "keywords": ["{{keyword1}}", "{{keyword2}}"]
+            "keywords": [
+                "{{keyword1}}",
+                "{{keyword2}}"
+            ]
         },
         "dataSources": {
             "invoiceRemote": {
-                "uri": "https://services.odata.org/v2/Northwind/Northwind.svc/",
+                "uri": "/v2/Northwind/Northwind.svc/",
                 "type": "OData",
                 "settings": {
                     "odataVersion": "2.0"
                 }
             },
-            "invoiceMock": {
-                "uri": "/mockdata/",
-                "type": "OData",
-                "settings": {
-                    "localUri": "localService/metadata.xml",
-                    "odataVersion": "2.0"
-                }
+            "invoiceLocal": {
+                "uri": "localService/mockdata/invoices.json",
+                "type": "JSON"
             }
         }
     },
@@ -46,26 +45,29 @@
             "tablet": true,
             "phone": true
         },
-        "supportedThemes": ["sap_horizon", "sap_bluecrystal"]
+        "supportedThemes": [
+            "sap_horizon",
+            "sap_bluecrystal"
+        ]
     },
     "sap.ui5": {
         "_version": "1.1.0",
         "resources": {
+            "js": [
+                {
+                    "uri": "<uri>"
+                }
+            ],
             "css": [
                 {
                     "uri": "css/style.css"
                 }
             ]
         },
-        "resourceRoots": {
-            "ui5.walkthrough": "./"
-        },
         "dependencies": {
             "minUI5Version": "1.60",
             "libs": {
-                "sap.m": {},
-                "sap.ui.core": {},
-                "sap.ui.layout": {}
+                "sap.m": {}
             }
         },
         "models": {
@@ -75,10 +77,15 @@
                     "bundleName": "ui5.walkthrough.i18n.i18n",
                     "supportedLocales": [""],
                     "fallbackLocale": ""
-                }
+                },
+                "uri":"<uriRelativeToManifest"
             },
             "invoice": {
-                "dataSource": "invoiceMock"
+                "dataSource": "invoiceLocal"
+            },
+            "":{
+                "dataSource": "<dataSourceAlias>",
+                "settings": {}
             }
         },
         "rootView": {
@@ -88,17 +95,51 @@
             "id": "app"
         },
         "handleValidation": false,
-        "contentDensities": {
-            "compact": true,
-            "cozy": true
+        "config": {
+
+        },
+        "routing": {
+        "config": {
+            "routerClass": "sap.m.routing.Router",
+            "viewType": "XML",
+            "viewPath": "ui5.walkthrough.view",
+            "controlId": "app",
+            "controlAggregation": "pages",
+            "async": true
+        },
+        "routes": [
+            {
+                "pattern": "",  
+                "name": "overview",
+                "target": "overview"
+            },
+            {
+                "pattern": "detail/{invoicePath}",
+                "name": "detail",
+                "target": "detail"
+            }
+        ],
+        "targets": {
+            "overview": {
+                "viewId": "overview",
+                "viewName": "Overview"
+            },
+            "detail": {
+                "viewId": "detail",
+                "viewName": "Detail"
+            }
+
         }
+
     },
-    "sap.platform.abap": {
-        "_version": "1.1.0",
-        "uri": "/sap/bc/ui5_ui5/sap/z_my_fiori_app/"
+    "extends": {
+        "component": "<extendedComponentID>",
+        "minVersion": "<miniComponentVersion>",
+        "extensions": {}
     },
-    "sap.platform.hcp": {
-        "_version": "1.1.0",
-        "uri": "/hcp/path/to/your/app/"
+    "contentDensities": {
+        "compact": true,
+        "cozy": true
     }
+}
 }

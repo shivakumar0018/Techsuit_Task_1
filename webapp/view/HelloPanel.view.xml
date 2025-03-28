@@ -5,14 +5,16 @@
 
     <Panel headerText="{i18n>HelloPanelTitle}"
            class="sapUiResponsiveMargin"
-           width="auto">
-        
-            <Button 
+           width="auto" 
+           expandable="{device/system/phone}"
+           expanded="{= !${device>system/phone}}">
+        <content>
+                <Button 
                 id="hellowDialogueButton"
                 text="{i18n>openDialogueButtonText}"
                 press="onOpenDialog"
-                class="sapUiSmallMarginEnd"
-            />
+                class="sapUiSmallMarginEnd sapUiVisibleOnlyOnDesktop"
+                />
             <Button 
                 text="{i18n>showHellowButtonText}"
                 press="onShowHellow"
@@ -27,7 +29,7 @@
             <FormattedText 
                 htmlText="Hello {/recipient/name}"
                 class="sapUiSmallMargin sapThemeHighlight-asColor myAppDemoWT myCustomText"/>
-        
+        </content>
     </Panel>
 
 </mvc:View>
